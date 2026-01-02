@@ -66,9 +66,14 @@ const CreateScreen = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
+        let errorData;
+        try {
+          errorData = await response.json();
+        } catch (e) {
+          errorData = { message: `HTTP error! status: ${response.status}` };
+        }
         console.log(errorData);
-        throw new Error(errorData.error || "Failed to create transaction");
+        throw new Error(errorData.error || errorData.message || "Failed to create transaction");
       }
 
       Alert.alert("Success", "Transaction created successfully");
