@@ -1,7 +1,5 @@
-import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
 import { Link, useRouter } from "expo-router";
 import { Alert, FlatList, Image, RefreshControl, Text, TouchableOpacity, View } from "react-native";
-import { SignOutButton } from "@/components/SignOutButton";
 import { useTransactions } from "../../hooks/useTransactions";
 import { useEffect, useState } from "react";
 import PageLoader from "../../components/PageLoader";
@@ -12,9 +10,10 @@ import { TransactionItem } from "../../components/TransactionItem";
 import NoTransactionsFound from "../../components/NoTransactionsFound";
 
 export default function Page() {
-  const { user } = useUser();
   const router = useRouter();
   const [refreshing, setRefreshing] = useState(false);
+
+  const user = { id: "test_user_001", emailAddresses: [{ emailAddress: "test@playstore.com" }] };
 
   const { transactions, summary, isLoading, loadData, deleteTransaction } = useTransactions(
     user.id
@@ -64,7 +63,6 @@ export default function Page() {
               <Ionicons name="add" size={20} color="#FFF" />
               <Text style={styles.addButtonText}>Add</Text>
             </TouchableOpacity>
-            <SignOutButton />
           </View>
         </View>
 
