@@ -1,4 +1,5 @@
 import express from "express";
+import authMiddleware from "../middleware/auth.js";
 import {
   createTransaction,
   deleteTransaction,
@@ -7,6 +8,8 @@ import {
 } from "../controllers/transactionsController.js";
 
 const router = express.Router();
+
+router.use(authMiddleware);
 
 router.get("/:userId", getTransactionsByUserId);
 router.post("/", createTransaction);

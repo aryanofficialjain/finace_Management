@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { initDB } from "./config/db.js";
 import rateLimiter from "./middleware/rateLimiter.js";
+import authMiddleware from "./middleware/auth.js";
 
 import transactionsRoute from "./routes/transactionsRoute.js";
 import job from "./config/cron.js";
@@ -16,6 +17,7 @@ if (process.env.NODE_ENV === "production") job.start();
 // middleware
 app.use(cors());
 app.use(rateLimiter);
+app.use(authMiddleware);
 app.use(express.json());
 
 // our custom simple middleware
